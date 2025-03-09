@@ -23,8 +23,8 @@ const WrapperList = styled.ul`
         grid-gap: 5px;
     }
 
-    @media only screen and (max-width: 768px) {
-        grid-template-columns: repeat(2, 1fr);
+    @media only screen and (max-width: 500px) {
+        grid-template-columns: repeat(1, 1fr);
         grid-gap: 5px;
     }
 `

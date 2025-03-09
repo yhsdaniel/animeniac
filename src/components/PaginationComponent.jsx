@@ -25,6 +25,9 @@ const theme = createTheme({
 					"& .MuiPaginationItem-ellipsis": {
 						color: "rgba(255, 255, 255, 0.5)", // Color for ellipsis (...)
 					},
+					"& .css-1c5o7vy-MuiPagination-ul": {
+						flexWrap: "nowrap"
+					}
 				}
 			}
 		}
@@ -36,14 +39,14 @@ export default function PaginationComponent({ countPage, page, handleChangePage 
 	return (
 		<ThemeProvider theme={theme}>
 			<Stack spacing={2} alignItems={"center"}>
-				<Pagination 
+				<Pagination
 					count={countPage}
 					page={page}
 					variant="outlined"
 					color="primary"
 					onChange={handleChangePage}
 					renderItem={(item) => (
-						<PaginationItem 
+						<PaginationItem
 							component={Link}
 							to={`/${item.page === 1 ? `?page=1` : `?page=${item.page}`}`}
 							{...item}

@@ -10,7 +10,6 @@ import Header from './components/Header'
 const WrapperList = styled.ul`
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-gap: 16px;
     padding-left: 0;
 
     @media only screen and (max-width: 1200px) {
@@ -19,7 +18,17 @@ const WrapperList = styled.ul`
     }
 
     @media only screen and (max-width: 1024px) {
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 5px;
+    }
+
+    @media only screen and (max-width: 912px) {
         grid-template-columns: repeat(3, 1fr);
+        grid-gap: 5px;
+    }
+
+    @media only screen and (max-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
         grid-gap: 5px;
     }
 

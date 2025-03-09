@@ -1,3 +1,4 @@
+import { Rating } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player'
@@ -22,14 +23,28 @@ const DescriptionDiv = styled.div`
     justify-content: center;
     text-align: center;
     gap: 2px;
+
+    @media only screen and (max-width: 912px) {
+        flex-direction: column;
+    }
 `
 
 const DescriptionP = styled.p`
     border-right: 1px solid rgba(255, 255, 255, 0.5);
     padding: 0 2rem;
+    display: flex;
 
     &:last-child {
         border-right: none;
+    }
+
+    @media only screen and (max-width: 912px) {
+        justify-content: start;
+        align-items: center;
+        width: 100%;
+        border: none;
+        margin: 5px 0;
+        padding: 0;
     }
 `
 
@@ -85,7 +100,9 @@ export default function DetailAnime() {
                         <p>{detail.attributes.synopsis}</p>
                         <DescriptionDiv>
                             <DescriptionP>{detail.attributes.endDate}</DescriptionP>
-                            <DescriptionP>Rating: {detail.attributes.averageRating}</DescriptionP>
+                            <DescriptionP>
+                                <Rating name="half-rating-read" defaultValue={(detail.attributes.averageRating * 5) / 100} precision={0.5} readOnly /> {((detail.attributes.averageRating * 5) / 100).toFixed(1)}
+                            </DescriptionP>
                             <DescriptionP>Status: {detail.attributes.status}</DescriptionP>
                             <DescriptionP>Age: {detail.attributes.ageRatingGuide}</DescriptionP>
                         </DescriptionDiv>

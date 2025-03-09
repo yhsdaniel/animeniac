@@ -1,13 +1,36 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import ReactPlayer from 'react-player'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 const ImageAndDescDiv = styled.div`
     display: flex;
     align-items: start;
+    justify-content: space-around;
     text-align: left;
     gap: 16px;
+
+    @media only screen and (max-width: 912px) {
+        flex-direction: column;
+    }
+`
+
+const DescriptionDiv = styled.div`
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    text-align: center;
+    gap: 2px;
+`
+
+const DescriptionP = styled.p`
+    border-right: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 0 2rem;
+
+    &:last-child {
+        border-right: none;
+    }
 `
 
 export default function DetailAnime() {
@@ -17,10 +40,11 @@ export default function DetailAnime() {
     useEffect(() => {
         const fetchDetailAnime = async () => {
             try {
-                if(title){
+                if (title) {
                     const { data: response } = await axios.get(`https://kitsu.io/api/edge/anime?filter[text]=${title}`)
-                    if(response.data && response.data.length > 0){
+                    if (response.data && response.data.length > 0) {
                         setDetail(response.data[0])
+                        console.log(response.data[0])
                     } else {
                         setDetail(null)
                     }
@@ -32,18 +56,39 @@ export default function DetailAnime() {
         fetchDetailAnime()
     }, [title])
 
-    if(!detail) return
+    if (!detail) return
 
     return (
         <>
-            <h2 style={{ textAlign: 'left' }}>{detail.attributes.titles.en}</h2>
+            <ReactPlayer
+                url={`https://youtube.com/watch?v=${detail.attributes.youtubeVideoId}?origin=http:localhost:5173`}
+                playing={true}
+                controls
+                width={'auto'}
+                height={"500px"}
+                style={{ margin: '1rem auto' }}
+                config={{
+                    youtube: {
+                        playerVars: { rel: 0, modestbranding: 1 },
+                    },
+                    vimeo: {
+                        playerOptions: { dnt: 1 }, // Do Not Track mode
+                    },
+                }}
+            />
+            <h2 style={{ textAlign: 'left' }}>{detail.attributes.titles.en_jp}</h2>
+            <h3 style={{ textAlign: 'left' }}>{detail.attributes.titles.ja_jp}</h3>
             <div>
                 <ImageAndDescDiv>
                     <img src={detail.attributes.posterImage.small} alt={detail.attributes.canonicalTitle} />
                     <div>
                         <p>{detail.attributes.synopsis}</p>
-                        <p>Rating: {detail.attributes.averageRating}</p>
-                        <p>Status: {detail.attributes.status}</p>
+                        <DescriptionDiv>
+                            <DescriptionP>{detail.attributes.endDate}</DescriptionP>
+                            <DescriptionP>Rating: {detail.attributes.averageRating}</DescriptionP>
+                            <DescriptionP>Status: {detail.attributes.status}</DescriptionP>
+                            <DescriptionP>Age: {detail.attributes.ageRatingGuide}</DescriptionP>
+                        </DescriptionDiv>
                     </div>
                 </ImageAndDescDiv>
             </div>

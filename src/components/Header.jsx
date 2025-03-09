@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Title = styled.h1`
-    font-size: 1.5em;
+    font-size: 1.2em;
     text-align: center;
     color: BF4F74;
 `
@@ -10,7 +10,7 @@ const Title = styled.h1`
 const Nav = styled.nav`
     background-color: #333;
     color: white;
-    padding: 10px;
+    padding: 5px;
     border-radius: 10px;
 `
 

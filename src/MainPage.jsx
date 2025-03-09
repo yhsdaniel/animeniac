@@ -1,15 +1,32 @@
 import axios from 'axios'
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+
 import PaginationComponent from './components/PaginationComponent'
 import AnimeList from './components/AnimeList'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import Header from './components/Header'
 
 const WrapperList = styled.ul`
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 16px;
     padding-left: 0;
+
+    @media only screen and (max-width: 1200px) {
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 5px;
+    }
+
+    @media only screen and (max-width: 1024px) {
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 5px;
+    }
+
+    @media only screen and (max-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 5px;
+    }
 `
 
 export default function MainPage() {
@@ -56,18 +73,25 @@ export default function MainPage() {
 
     return (
         <>
-            <WrapperList>
-                {list?.map((value) => (
-                    <AnimeList
-                        key={value.id}
-                        loading={loading}
-                        onClick={() => goToDetail(value.attributes.titles.en_jp)}
-                        src={value.attributes.posterImage.small}
-                        title={value.attributes.titles.en_jp}
-                    />
-                ))}
-            </WrapperList>
-            <PaginationComponent countPage={totalPages} page={page} handleChangePage={handleChangePage} />
+            {!loading ? (
+                <>
+                    <Header />
+                    <WrapperList>
+                        {list?.map((value) => (
+                            <AnimeList
+                                key={value.id}
+                                loading={loading}
+                                onClick={() => goToDetail(value.attributes.titles.en_jp)}
+                                src={value.attributes.posterImage.small}
+                                title={value.attributes.titles.en_jp}
+                            />
+                        ))}
+                    </WrapperList>
+                    <PaginationComponent countPage={totalPages} page={page} handleChangePage={handleChangePage} />
+                </>
+            ) : (
+                <h3>Loading...</h3>
+            )}
         </>
     )
 }

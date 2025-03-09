@@ -8,7 +8,6 @@ import DetailAnime from './DetailAnime'
 function App() {
 	return (
 		<Router>
-			<Header />
 			<Routes>
 				<Route path="/" element={<MainPage />} />
 				<Route path="/page/:page" element={<MainPage />} />

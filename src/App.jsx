@@ -1,9 +1,9 @@
 import './App.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
-import MainPage from './MainPage'
 import Header from './components/Header'
-import DetailAnime from './DetailAnime'
+import MainPage from './pages/MainPage'
+import DetailAnime from './pages/DetailAnime'
 
 function App() {
 	return (

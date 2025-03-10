@@ -2,9 +2,9 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
-import PaginationComponent from './components/PaginationComponent'
-import AnimeList from './components/AnimeList'
-import { WrapperUl } from './components/ui/TagComponent'
+import PaginationComponent from '../components/PaginationComponent'
+import AnimeList from '../components/AnimeList'
+import { WrapperUl } from '../components/ui/TagComponent'
 
 export default function MainPage() {
     const [query] = useSearchParams()
@@ -53,10 +53,10 @@ export default function MainPage() {
             {!loading ? (
                 <>
                     <WrapperUl>
-                        {list?.map((value) => (
+                        {list?.map((value, index) => (
                             <AnimeList
                                 key={value.id}
-                                loading={loading}
+                                index={index}
                                 onClick={() => goToDetail(value.attributes.titles.en_jp)}
                                 src={value.attributes.posterImage.small}
                                 title={value.attributes.titles.en_jp}

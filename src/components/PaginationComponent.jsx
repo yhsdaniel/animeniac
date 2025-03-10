@@ -9,18 +9,18 @@ const theme = createTheme({
 			styleOverrides: {
 				root: {
 					"& .MuiPaginationItem-root": {
-						color: "rgba(255, 255, 255, 0.5)", // Default text color
+						color: "rgba(255, 255, 255, 0.5)",
 					},
 					"& .MuiPaginationItem-page.Mui-selected": {
 						backgroundColor: "#1976d2", // Background for selected page
-						color: "#fff", // Text color for selected page
+						color: "#fff",
 						borderColor: "#1976d2",
 					},
 					"& .MuiPaginationItem-page.Mui-selected:hover": {
-						backgroundColor: "#115293", // Darker shade on hover
+						backgroundColor: "#115293",
 					},
 					"& .MuiPaginationItem-root:hover": {
-						backgroundColor: "rgba(25, 118, 210, 0.1)", // Light hover effect
+						backgroundColor: "rgba(25, 118, 210, 0.1)",
 					},
 					"& .MuiPaginationItem-ellipsis": {
 						color: "rgba(255, 255, 255, 0.5)", // Color for ellipsis (...)

@@ -104,7 +104,7 @@ export default function DetailAnime() {
                         playerVars: { rel: 0, modestbranding: 1 },
                     },
                     vimeo: {
-                        playerOptions: { dnt: 1 }, // Do Not Track mode
+                        playerOptions: { dnt: 1 },
                     },
                 }}
             />

@@ -21,7 +21,7 @@ export default function Header() {
         <Nav>
             <Link to="/" style={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
                 <CottageIcon style={{ fontSize: '1.5rem', margin: '0 .5rem' }} />
-                <Title>Anime Kee</Title>
+                <Title>AnimeKee - All About Anime</Title>
             </Link>
         </Nav>
     )

@@ -1,8 +1,9 @@
 import { Rating } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ReactPlayer from 'react-player'
-import { useParams } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 const ImageAndDescDiv = styled.div`
@@ -48,8 +49,18 @@ const DescriptionP = styled.p`
     }
 `
 
+const WrapperNavigation = styled.div`
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 0 1rem;
+`
+
 export default function DetailAnime() {
     const { title } = useParams()
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const page = queryParams.get("page");
     const [detail, setDetail] = useState(null)
 
     useEffect(() => {
@@ -59,7 +70,6 @@ export default function DetailAnime() {
                     const { data: response } = await axios.get(`https://kitsu.io/api/edge/anime?filter[text]=${title}`)
                     if (response.data && response.data.length > 0) {
                         setDetail(response.data[0])
-                        console.log(response.data[0])
                     } else {
                         setDetail(null)
                     }
@@ -75,6 +85,13 @@ export default function DetailAnime() {
 
     return (
         <>
+            <WrapperNavigation>
+                <Link to={'/'} style={{ fontSize: '.85rem' }}>Home</Link>
+                <ArrowForwardIosIcon style={{ fontSize: '.85rem', margin: '0 .5rem' }}/>
+                <Link to={`/?page=${page}`} style={{ fontSize: '.85rem' }}>Page {page}</Link>
+                <ArrowForwardIosIcon style={{ fontSize: '.85rem', margin: '0 .5rem' }}/>
+                <span style={{ fontSize: '.85rem' }}>{title}</span>
+            </WrapperNavigation>
             <ReactPlayer
                 url={`https://youtube.com/watch?v=${detail.attributes.youtubeVideoId}?origin=http:localhost:5173`}
                 playing={true}
@@ -93,22 +110,22 @@ export default function DetailAnime() {
             />
             <h2 style={{ textAlign: 'left' }}>{detail.attributes.titles.en_jp}</h2>
             <h3 style={{ textAlign: 'left' }}>{detail.attributes.titles.ja_jp}</h3>
-            <div>
-                <ImageAndDescDiv>
-                    <img src={detail.attributes.posterImage.small} alt={detail.attributes.canonicalTitle} />
-                    <div>
-                        <p>{detail.attributes.synopsis}</p>
-                        <DescriptionDiv>
-                            <DescriptionP>{detail.attributes.endDate}</DescriptionP>
-                            <DescriptionP>
-                                <Rating name="half-rating-read" defaultValue={(detail.attributes.averageRating * 5) / 100} precision={0.5} readOnly /> {((detail.attributes.averageRating * 5) / 100).toFixed(1)}
-                            </DescriptionP>
-                            <DescriptionP>Status: {detail.attributes.status}</DescriptionP>
-                            <DescriptionP>Age: {detail.attributes.ageRatingGuide}</DescriptionP>
-                        </DescriptionDiv>
-                    </div>
-                </ImageAndDescDiv>
-            </div>
+
+
+            <ImageAndDescDiv>
+                <img src={detail.attributes.posterImage.small} alt={detail.attributes.canonicalTitle} />
+                <div>
+                    <p>{detail.attributes.synopsis}</p>
+                    <DescriptionDiv>
+                        <DescriptionP>{detail.attributes.endDate}</DescriptionP>
+                        <DescriptionP>
+                            <Rating name="half-rating-read" defaultValue={(detail.attributes.averageRating * 5) / 100} precision={0.5} readOnly /> {((detail.attributes.averageRating * 5) / 100).toFixed(1)}
+                        </DescriptionP>
+                        <DescriptionP>Status: {detail.attributes.status}</DescriptionP>
+                        <DescriptionP>Age: {detail.attributes.ageRatingGuide}</DescriptionP>
+                    </DescriptionDiv>
+                </div>
+            </ImageAndDescDiv>
         </>
     )
 }

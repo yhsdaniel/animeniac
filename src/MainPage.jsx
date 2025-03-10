@@ -1,42 +1,10 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import PaginationComponent from './components/PaginationComponent'
 import AnimeList from './components/AnimeList'
-import Header from './components/Header'
-
-const WrapperList = styled.ul`
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    padding-left: 0;
-
-    @media only screen and (max-width: 1200px) {
-        grid-template-columns: repeat(4, 1fr);
-        grid-gap: 5px;
-    }
-
-    @media only screen and (max-width: 1024px) {
-        grid-template-columns: repeat(4, 1fr);
-        grid-gap: 5px;
-    }
-
-    @media only screen and (max-width: 912px) {
-        grid-template-columns: repeat(3, 1fr);
-        grid-gap: 5px;
-    }
-
-    @media only screen and (max-width: 768px) {
-        grid-template-columns: repeat(2, 1fr);
-        grid-gap: 5px;
-    }
-
-    @media only screen and (max-width: 500px) {
-        grid-template-columns: repeat(1, 1fr);
-        grid-gap: 5px;
-    }
-`
+import { WrapperUl } from './components/ui/TagComponent'
 
 export default function MainPage() {
     const [query] = useSearchParams()
@@ -58,7 +26,7 @@ export default function MainPage() {
     const navigate = useNavigate()
 
     const goToDetail = (title) => {
-        navigate(`/anime/${title}`)
+        navigate(`/anime/${title}/?page=${page}`)
     }
 
     useEffect(() => {
@@ -84,8 +52,7 @@ export default function MainPage() {
         <>
             {!loading ? (
                 <>
-                    <Header />
-                    <WrapperList>
+                    <WrapperUl>
                         {list?.map((value) => (
                             <AnimeList
                                 key={value.id}
@@ -95,7 +62,7 @@ export default function MainPage() {
                                 title={value.attributes.titles.en_jp}
                             />
                         ))}
-                    </WrapperList>
+                    </WrapperUl>
                     <PaginationComponent countPage={totalPages} page={page} handleChangePage={handleChangePage} />
                 </>
             ) : (
